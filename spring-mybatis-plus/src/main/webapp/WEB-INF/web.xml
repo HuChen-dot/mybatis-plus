@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+  <!-- 请求参数编码过滤器 -->
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <!--指定过滤器过滤的路径-->
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- Spring监听器 监听加载相关配置文件(启动Spring容器)-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!--防止Spring内存溢出监听器-->
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+
+  <!--spring的其他配置文件(包括mybatis配置文件),之后的redis等框架整合，
+  包的引用都可以写在spring-applicationContext.xml里面 -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath*:config/spring-applicationContext.xml
+    </param-value>
+  </context-param>
+
+  <!--log4j日志-->
+  <context-param>
+    <param-name>log4jConfigLocation</param-name>
+    <param-value>
+      classpath:log4j.properties
+    </param-value>
+  </context-param>
+
+  <!--Spring MVC servlet-->
+  <servlet>
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:config/spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <!--
+   配置拦截哪些拦截路径：
+     方式1：带后缀，比如：*.do  *.action  *.aaa
+     方式2：/   这是RESTful风格；不会拦截.jsp文件，但是会拦截静态文件
+       解决 / 会拦截静态文件问题：
+       在spring-mvc.xml里加入标签即可：
+                    <mvc:default-servlet-handler/>
+     方式3：/* 拦截所有，连jsp等静态文件也会拦截，（此方式不要使用）
+   -->
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- 访问根路径时的默认访问页面，从上到下匹配 -->
+  <welcome-file-list>
+    <welcome-file>/index.html</welcome-file>
+    <welcome-file>/index.jsp</welcome-file>
+    <welcome-file>/reg.html</welcome-file>
+  </welcome-file-list>
+</web-app>
