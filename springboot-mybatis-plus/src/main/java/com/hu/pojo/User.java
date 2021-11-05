@@ -1,6 +1,7 @@
 package com.hu.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 /**
  * @Author: hu.chen
@@ -8,7 +9,7 @@ import lombok.Data;
  * @DateTime: 2021/11/4 12:46 下午
  **/
 @Data
-public class User extends PageInfo{
+public class User extends Model<User> {
     /**
      *  用户ID
      */

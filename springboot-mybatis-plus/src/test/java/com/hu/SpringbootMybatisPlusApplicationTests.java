@@ -24,6 +24,7 @@ class SpringbootMybatisPlusApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
+
     @Test
     void contextLoads() {
 
@@ -37,7 +38,7 @@ class SpringbootMybatisPlusApplicationTests {
 
     @Test
     void insert() {
-        User user=new User();
+        User user = new User();
         user.setUserName01("plus插入01");
         user.setUserPassword("123456");
         user.setUserPhone("124354354");
@@ -50,7 +51,7 @@ class SpringbootMybatisPlusApplicationTests {
 
     @Test
     void update() {
-        User user=new User();
+        User user = new User();
         user.setId(1456165740095774727L);
         user.setUserName01("plus插入01update");
 
@@ -65,22 +66,23 @@ class SpringbootMybatisPlusApplicationTests {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<User>();
         updateWrapper.eq("user_name", "plus插入01update");
         //这里是修改的值
-        User user=new User();
+        User user = new User();
         user.setUserPassword("123");
         user.setUserName01("条件修改");
 
-        userMapper.update(user,updateWrapper);
+        userMapper.update(user, updateWrapper);
 
         System.err.println(user);
     }
-    @Test
-    public void delete(){
 
-        userMapper.deleteBatchIds(Arrays.asList(1456165740095774722L,1456165740095774723L,1456165740095774724L,1456165740095774725L));
+    @Test
+    public void delete() {
+
+        userMapper.deleteBatchIds(Arrays.asList(1456165740095774722L, 1456165740095774723L, 1456165740095774724L, 1456165740095774725L));
     }
 
     @Test
-    public void select01(){
+    public void select01() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         queryWrapper.eq("user_password", "123456");
         List<User> users = userMapper.selectList(queryWrapper);
@@ -91,12 +93,12 @@ class SpringbootMybatisPlusApplicationTests {
     }
 
     @Test
-    public void pageselect01(){
+    public void pageselect01() {
         //构建where条件
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>();
         queryWrapper.eq("user_password", "123456");
 
-        IPage<User> page=new Page();
+        IPage<User> page = new Page();
         //当前页
         page.setCurrent(2);
         //每页条数
@@ -109,4 +111,6 @@ class SpringbootMybatisPlusApplicationTests {
             System.err.println(user);
         }
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.hu;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,6 +25,16 @@ public class SpringbootMybatisPlusApplication {
     @Bean
     public PaginationInterceptor paginationInterceptor(){
         return  new PaginationInterceptor();
+    }
+
+    @Bean
+    public PerformanceInterceptor performanceInterceptor(){
+        PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+        //设置sql执行时间阈值，超过此时间，则抛出异常，时间单位毫秒
+        performanceInterceptor.setMaxTime(100);
+        //sql是否格式化显示
+        performanceInterceptor.setFormat(true);
+        return performanceInterceptor;
     }
 
 }
