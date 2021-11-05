@@ -22,6 +22,10 @@ mybatis:
   configuration:
     #开启驼峰映射
     map-underscore-to-camel-case: true
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
 
 #这样才能打印出sql语句
 logging:
